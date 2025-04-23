@@ -1,0 +1,24 @@
+<header style="position: fixed; top: 0; left: 0; width: 100%; z-index: 1000; background: linear-gradient(to right, #8a2be2, #4b0082); padding: 10px 20px; box-shadow: 0 2px 5px rgba(0,0,0,0.3);">
+    <div style="max-width: 1200px; margin: 0 auto; display: flex; align-items: center; justify-content: space-between;">
+      <!-- Logo -->
+      <div style="display: flex; align-items: center;">
+        <!-- Asegúrate de tener tu logo en la carpeta static -->
+        <img src="{{ url_for('static', filename='logo.png') }}" alt="Logo" style="height: 50px; margin-right: 10px;">
+        <span style="color: white; font-size: 1.5rem; font-weight: bold;">Mi Plataforma</span>
+      </div>
+      <!-- Menú de navegación -->
+      <nav style="display: flex; align-items: center;">
+        <a href="/" style="color: white; margin: 0 10px; text-decoration: none;">Inicio</a>
+        <a href="/blog" style="color: white; margin: 0 10px; text-decoration: none;">Blog</a>
+        <a href="/noticias" style="color: white; margin: 0 10px; text-decoration: none;">Noticias</a>
+        <a href="/about-us" style="color: white; margin: 0 10px; text-decoration: none;">Acerca</a>
+        <a href="/contact-us" style="color: white; margin: 0 10px; text-decoration: none;">Contacto</a>
+      </nav>
+      <!-- Botones de ingreso -->
+      <div>
+        <a href="/login_usuario" style="background: white; color: #4b0082; padding: 8px 12px; margin: 0 5px; border-radius: 4px; text-decoration: none; font-weight: bold;">Ingresar</a>
+        
+      </div>
+    </div>
+  </header>
+  

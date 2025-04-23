@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>{% block title %}Mi Sitio{% endblock %}</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Enlace a tus hojas de estilo, por ejemplo: -->
+  <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+  {% if header_file %}
+    {% include header_file %}
+  {% else %}
+    {% include "default_header.html" %}
+  {% endif %}
+
+  <main>
+    {% block content %}{% endblock %}
+  </main>
+
+  {% if footer_file %}
+    {% include footer_file %}
+  {% else %}
+    {% include "default_footer.html" %}
+  {% endif %}
+</body>
+</html>
