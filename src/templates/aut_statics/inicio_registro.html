@@ -1,0 +1,255 @@
+{% extends "base.html" %}
+{% block title %}Iniciar Sesión / Registrarse{% endblock %}
+
+{% block content %}
+<section class="auth-wrapper">
+  <!-- ─────────── Selector LOGIN / REGISTER ─────────── -->
+  <div class="switchers">
+    <button class="switch-btn" onclick="togglePanel('login')">Log In</button>
+    <button class="switch-btn" onclick="togglePanel('register')">Register</button>
+  </div>
+
+  <!-- ─────────── LOGIN ─────────── -->
+  <div id="panel-login" class="panel">
+    <h2>Iniciar Sesión</h2>
+
+    <div class="subswitchers">
+      <button class="toggle-btn" onclick="toggleLogin('usuarios')">Usuario</button>
+      <button class="toggle-btn" onclick="toggleLogin('institucion')">Institución</button>
+    </div>
+
+    <!-- ── Login Usuario ── -->
+    <form id="login-usuarios"
+          action="{{ url_for('login.process_login', tipo='usuarios') }}"
+          method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <fieldset>
+        <legend>Usuario</legend>
+
+        <label>Nombre de usuario</label>
+        <input type="text"     name="user_name" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="password"  required>
+
+        <button type="submit" class="submit-btn">Entrar</button>
+      </fieldset>
+    </form>
+
+    <!-- ── Login Institución ── -->
+    <form id="login-institucion"
+          class="hidden"
+          action="{{ url_for('login.process_login', tipo='institucion') }}"
+          method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <fieldset>
+        <legend>Institución</legend>
+
+        <label>Correo de contacto</label>
+        <input type="email"    name="email_contacto" required>
+
+        <label>Contraseña</label>
+        <input type="password" name="password"        required>
+
+        <button type="submit" class="submit-btn">Entrar</button>
+      </fieldset>
+    </form>
+  </div>
+
+  <!-- ─────────── REGISTER ─────────── -->
+  <div id="panel-register" class="panel hidden">
+    <h2>Registrarse</h2>
+
+    <div class="subswitchers">
+      <button class="toggle-btn" onclick="toggleRegister('usuarios')">Usuario</button>
+      <button class="toggle-btn" onclick="toggleRegister('institucion')">Institución</button>
+    </div>
+
+    <!-- ── Registro Usuario ── -->
+    <form id="register-usuarios"
+          action="{{ url_for('login.process_register', tipo='usuarios') }}"
+          method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <fieldset>
+        <legend>Usuario</legend>
+
+        <label>Nombres</label>
+        <input type="text" name="nombres" required>
+
+        <label>Apellido paterno</label>
+        <input type="text" name="apellido_paterno" required>
+
+        <label>Apellido materno</label>
+        <input type="text" name="apellido_materno" required>
+
+        <label>Nombre de usuario</label>
+        <input type="text" name="user_name" required>
+
+        <label>Correo (solo Gmail)</label>
+        <input type="email" name="email_contacto"
+               placeholder="example@gmail.com"
+               pattern=".+@gmail\.com" required>
+
+        <label>Fecha de nacimiento</label>
+        <input type="date" name="fecha_nacimiento" required>
+
+        <label>Código postal</label>
+        <input type="text" name="c_p" required>
+
+        <label>Género</label>
+        <select name="genero" required>
+          <option value="" disabled selected>— Selecciona —</option>
+          <option value="masculino">Masculino</option>
+          <option value="femenino">Femenino</option>
+          <option value="otro">Otro</option>
+        </select>
+
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+
+        <label>Confirmar contraseña</label>
+        <input type="password" name="confirm_password" required>
+
+        <button type="submit" class="submit-btn">Crear cuenta</button>
+      </fieldset>
+    </form>
+
+    <!-- ── Registro Institución ── -->
+    <form id="register-institucion"
+          class="hidden"
+          action="{{ url_for('login.process_register', tipo='institucion') }}"
+          method="POST">
+      <input type="hidden" name="csrf_token" value="{{ csrf_token() }}">
+      <fieldset>
+        <legend>Institución</legend>
+
+        <label>Nombre comercial</label>
+        <input type="text" name="nombre_comercial" required>
+
+        <label>Razón social</label>
+        <input type="text" name="razon_social" required>
+
+        <label>Correo de contacto</label>
+        <input type="email" name="email_contacto" required>
+
+        <label>Teléfono</label>
+        <input type="text" name="telefono_contacto">
+
+        <label>Contraseña</label>
+        <input type="password" name="password" required>
+
+        <label>Confirmar contraseña</label>
+        <input type="password" name="confirm_password" required>
+
+        <button type="submit" class="submit-btn">Crear cuenta</button>
+      </fieldset>
+    </form>
+  </div>
+</section>
+
+<!-- ─────────── ESTILOS ─────────── -->
+<style>
+  /* contenedor */
+  .auth-wrapper{
+    max-width:640px;
+    margin:80px auto 120px;
+    padding:40px;
+    background:#1a1a1a;
+    border-radius:12px;
+    box-shadow:0 2px 5px rgba(0,0,0,.5);
+    color:#fff;                         /* texto blanco, tu preferencia */
+    font-family:Arial,Helvetica,sans-serif;
+  }
+
+  /* switchers superior */
+  .switchers{
+    text-align:center;
+    margin-bottom:26px;
+  }
+  .switch-btn{
+    background:#4b0082;
+    color:#fff;
+    border:none;
+    border-radius:6px;
+    padding:10px 28px;
+    margin:0 6px;
+    cursor:pointer;
+    font-size:16px;
+  }
+
+  /* paneles */
+  .panel{ display:block; }
+  .hidden{ display:none; }
+
+  /* sub-switch */
+  .subswitchers{
+    text-align:center;
+    margin:18px 0 10px;
+  }
+  .toggle-btn{
+    background:#2d2d2d;
+    color:#fff;
+    border:none;
+    border-radius:4px;
+    padding:8px 18px;
+    margin:0 4px;
+    cursor:pointer;
+    font-size:14px;
+  }
+
+  /* forms */
+  form{ margin-top:15px; }
+  fieldset{
+    border:1px solid #555;
+    border-radius:8px;
+    padding:16px 20px 20px;
+    margin-bottom:0;
+  }
+  legend{ padding:0 8px; }
+  label{ display:block; margin-top:10px; font-size:14px; }
+  input,select{
+    width:100%;
+    padding:10px;
+    margin-top:4px;
+    border-radius:4px;
+    border:1px solid #888;
+    background:#2b2b2b;
+    color:#fff;
+    box-sizing:border-box;
+  }
+  .submit-btn{
+    margin-top:18px;
+    width:100%;
+    background:#4b0082;
+    color:#fff;
+    padding:12px;
+    border:none;
+    border-radius:6px;
+    cursor:pointer;
+    font-size:16px;
+  }
+</style>
+
+<!-- ─────────── SCRIPTS ─────────── -->
+<script>
+function togglePanel(mode){
+  document.getElementById('panel-login'   ).classList.toggle('hidden', mode!=='login');
+  document.getElementById('panel-register').classList.toggle('hidden', mode!=='register');
+}
+
+function toggleLogin(tipo){
+  document.getElementById('login-usuarios'    ).classList.toggle('hidden', tipo!=='usuarios');
+  document.getElementById('login-institucion' ).classList.toggle('hidden', tipo!=='institucion');
+}
+
+function toggleRegister(tipo){
+  document.getElementById('register-usuarios'    ).classList.toggle('hidden', tipo!=='usuarios');
+  document.getElementById('register-institucion' ).classList.toggle('hidden', tipo!=='institucion');
+}
+
+/* estado inicial */
+togglePanel('login');
+toggleLogin('usuarios');
+toggleRegister('usuarios');
+</script>
+{% endblock %}

@@ -1,0 +1,24 @@
+# Entorno virtual
+venv/
+
+# Archivos de Python compilados
+__pycache__/
+*.py[cod]
+
+# Archivos de dependencia / distribución
+*.egg-info/
+dist/
+build/
+
+# Configuración de entornos y variables
+.env
+*.env
+
+# Herramientas de desarrollo
+.idea/
+.vscode/
+*.sqlite3          # si usas bases de datos locales de prueba
+
+# Sistemas operativos
+.DS_Store          # macOS
+Thumbs.db          # Windows
